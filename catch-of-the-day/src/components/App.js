@@ -42,6 +42,12 @@ class App extends Component {
     this.setState({ fishes });
   }
 
+  updateFish = (key, updatedFish) => {
+    const fishes = { ...this.state.fishes };
+    fishes[key] = updatedFish;
+    this.setState({ fishes });
+  }
+
   loadSamplaFishes = () => {
     this.setState({
       fishes: sampleFishes
@@ -72,8 +78,10 @@ class App extends Component {
         </div>
         <Order fishes={this.state.fishes} order={this.state.order} />
         <Inventory 
-          addFish={this.addFish} 
+          addFish={this.addFish}
+          updateFish={this.updateFish} 
           loadSamplaFishes={this.loadSamplaFishes}
+          fishes={this.state.fishes}
         />
       </div>
     )
