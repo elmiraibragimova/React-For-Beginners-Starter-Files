@@ -11,70 +11,73 @@ class App extends Component {
   state = {
     fishes: {},
     order: {}
-  };
+  }
 
   static propTypes = {
     match: PropTypes.object
   }
 
   componentDidMount() {
-    const { params } = this.props.match;
+    const { params } = this.props.match
 
-    const localStorageRef = localStorage.getItem(params.storeId);
+    const localStorageRef = localStorage.getItem(params.storeId)
     if (localStorageRef) {
       this.setState({
         order: JSON.parse(localStorageRef)
-      });
+      })
     }
 
     this.ref = base.syncState(`${params.storeId}/fishes`, {
       context: this,
       state: 'fishes'
-    });
+    })
   }
 
   componentDidUpdate() {
-    localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
+    localStorage.setItem(
+      this.props.match.params.storeId,
+      JSON.stringify(this.state.order)
+    )
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.ref);
+    base.removeBinding(this.ref)
   }
 
   addFish = fish => {
-    const fishes = { ...this.state.fishes };
-    fishes[`fish${Date.now()}`] = fish;
-    this.setState({ fishes });
+    const fishes = { ...this.state.fishes }
+    fishes[`fish${Date.now()}`] = fish
+    this.setState({ fishes })
   }
 
   updateFish = (key, updatedFish) => {
-    const fishes = { ...this.state.fishes };
-    fishes[key] = updatedFish;
-    this.setState({ fishes });
+    const fishes = { ...this.state.fishes }
+    fishes[key] = updatedFish
+    this.setState({ fishes })
   }
 
-  deleteFish = (key) => {
-    const fishes = { ...this.state.fishes };
-    fishes[key] = null;
-    this.setState({ fishes });
+  deleteFish = key => {
+    const fishes = { ...this.state.fishes }
+    fishes[key] = null
+    this.setState({ fishes })
   }
 
   loadSamplaFishes = () => {
     this.setState({
       fishes: sampleFishes
-    });
+    })
   }
 
   addToOrder = key => {
-    const order = { ...this.state.order };
-    order[key] = order[key] + 1 || 1;
-    this.setState({ order });
+    const order = { ...this.state.order }
+    order[key] = order[key] + 1 || 1
+    this.setState({ order })
   }
 
   removeFromOrder = key => {
-    const order = { ...this.state.order };
-    delete order[key];
-    this.setState({ order });
+    const order = { ...this.state.order }
+    delete order[key]
+    this.setState({ order })
   }
 
   render() {
@@ -83,24 +86,24 @@ class App extends Component {
         <div className="menu">
           <Header tagline="Fresh Seafood Market" />
           <ul className="fishes">
-            {Object.keys(this.state.fishes).map(key => 
-              <Fish 
+            {Object.keys(this.state.fishes).map(key => (
+              <Fish
                 key={key}
                 index={key}
                 details={this.state.fishes[key]}
                 addToOrder={this.addToOrder}
               />
-            )}
+            ))}
           </ul>
         </div>
-        <Order 
-          fishes={this.state.fishes} 
-          order={this.state.order} 
+        <Order
+          fishes={this.state.fishes}
+          order={this.state.order}
           removeFromOrder={this.removeFromOrder}
         />
-        <Inventory 
+        <Inventory
           addFish={this.addFish}
-          updateFish={this.updateFish} 
+          updateFish={this.updateFish}
           deleteFish={this.deleteFish}
           loadSamplaFishes={this.loadSamplaFishes}
           fishes={this.state.fishes}
@@ -111,4 +114,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

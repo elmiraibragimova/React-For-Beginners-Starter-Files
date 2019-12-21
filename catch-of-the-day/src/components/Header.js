@@ -1,10 +1,10 @@
-import React, { Component} from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-const Header = (props) => (
+const Header = props => (
   <header className="top">
     <h1>
-      Cath 
+      Cath
       <span className="ofThe">
         <span className="of">OF</span>
         <span className="the">THE</span>
@@ -21,4 +21,4 @@ Header.propTypes = {
   tagline: PropTypes.string.isRequired
 }
 
-export default Header;
+export default Header
